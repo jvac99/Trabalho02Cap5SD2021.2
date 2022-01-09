@@ -12,18 +12,17 @@ public class Servidor {
 
 	public static void main(String args[]) {
 		Servente stub;
-		int port = 1099;
+		int porta = 1099;
 		// Registry rgsty;
 
 		try {
 
 			// Criação e exportação do Objeto Remoto:
 			stub = new Servente();
-
 			// Registro do Objeto Remoto com Java RMI Registry:
 			// rgsty = LocateRegistry.createRegistry(port);
 			// rgsty.bind("InterfaceRemota", stub);
-			LocateRegistry.createRegistry(port);
+			LocateRegistry.createRegistry(porta);
 			Naming.bind("InterfaceRemota", stub);
 
 			System.out.println("Servidor pronto");

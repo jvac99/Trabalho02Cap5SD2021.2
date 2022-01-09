@@ -12,12 +12,10 @@ import java.util.Arrays;
 //todas as classes presentes na transferência estão serializadas
 
 public class MensagemRequisicao implements Serializable {
-	private static final long serialVersionUID = 5095343506582610055L;
 
 	public static final int REPLY = 1;
-
 	public static final int REQUEST = 0;
-
+	private static final long serialVersionUID = 1L;
 	private int type;
 	private RemoteObjectReference remoteObjectRef;
 	private long requestId;
@@ -31,7 +29,6 @@ public class MensagemRequisicao implements Serializable {
 		this.remoteObjectRef = remoteObjectRef;
 		this.methodId = methodId;
 		this.args = toByteArray(args);
-
 		this.type = REQUEST;
 		this.requestId = next++;
 	}
@@ -43,7 +40,8 @@ public class MensagemRequisicao implements Serializable {
 		this.type = REPLY;
 	}
 
-	public byte[] toBytes() {// pega o contexto (this) e transforma para bytes
+	// pega o contexto (this) e transforma para bytes
+	public byte[] toBytes() {
 
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		ObjectOutputStream out = null;

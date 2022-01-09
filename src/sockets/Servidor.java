@@ -8,14 +8,15 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 public class Servidor {
+
 	private InetAddress lastClientIp;
 	private int lastClientPort;
-	private DatagramSocket socket;// controla o socket nessa implementação
+	private DatagramSocket serverSocket;// controla o socket nessa implementação
 	public int BufferSize = 1024;
 
 	public Servidor(int serverPort) throws SocketException {
-		System.out.println("Servidor iniciado na porta " + serverPort);
-		this.socket = new DatagramSocket(serverPort);
+		System.out.println("Servidor pronto, iniciado na porta " + serverPort);
+		this.serverSocket = new DatagramSocket(serverPort);
 
 	}
 
@@ -61,16 +62,18 @@ public class Servidor {
 
 	}
 
-	// pega as requisições (método previsto pelo autor, George Coulouris)
+	// Pega as requisições.
 	public byte[] getRequisicao() {
-		byte[] buffer = new byte[BufferSize];
-		DatagramPacket request = new DatagramPacket(buffer, BufferSize);
+		byte[] receiveData = new byte[BufferSize];
+		DatagramPacket receivePacket = new DatagramPacket(receiveData, BufferSize);
 
 		try {
-			this.socket.receive(request);
-			this.lastClientIp = request.getAddress();
-			this.lastClientPort = request.getPort();
-			return request.getData();
+			// Recebe Datagrama
+			this.serverSocket.receive(receivePacket);
+			// Obtem endereÃ§o IP e numero da porta do transmissor
+			this.lastClientIp = receivePacket.getAddress();
+			this.lastClientPort = receivePacket.getPort();
+			return receivePacket.getData();
 		} catch (IOException e) {
 			System.out.print(e.getMessage());
 			e.printStackTrace();
@@ -79,13 +82,15 @@ public class Servidor {
 
 	}
 
-	// envia respostas (método previsto pelo autor, George Coulouris)
+	// Envia as respostas
 	public void sendReply(byte[] respostaBytes) {
-		DatagramPacket resposta = new DatagramPacket(respostaBytes, 0, respostaBytes.length, lastClientIp,
+		// Cria datagrama para enviar ao cliente
+		DatagramPacket sendPacket = new DatagramPacket(respostaBytes, 0, respostaBytes.length, lastClientIp,
 				lastClientPort);
 		try {
 			System.out.println("Reply " + lastClientIp + ":" + lastClientPort);
-			socket.send(resposta);
+			// Escreve datagrama para dentro do socket
+			serverSocket.send(sendPacket);
 		} catch (IOException e) {
 			System.out.print(e.getMessage());
 			e.printStackTrace();

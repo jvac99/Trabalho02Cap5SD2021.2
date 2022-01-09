@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 public class Cliente {
 
 	private int serverPort;
-
 	private Pacote pacote;// mensagem para a transmissao
 	public int BufferSize = 1024;
 
@@ -31,8 +30,7 @@ public class Cliente {
 		return null;
 	}
 
-	// realiza a operacao de transmissao de mensagens (método previsto pelo autor,
-	// George Coulouris)
+	// Operacao de transmissão de mensagens.
 	public void doOperation(String methodName, String[] args) throws IOException, NoSuchMethodException {
 		System.out.println("Requisição\n" + "Começo da operação...");
 		InetAddress ip = null;
@@ -44,38 +42,36 @@ public class Cliente {
 		}
 
 		// Objeto remoto
+
 		Class<?> obj = null;
 		obj = pacote.getClass();
-
 		RemoteObjectReference ref = new RemoteObjectReference(ip, this.serverPort, obj.hashCode(), 0, obj);
-
 		java.lang.reflect.Method m = getMethod(methodName, obj.getMethods());
 
 		if (m == null)
 			throw new NoSuchMethodException();
-
 		int id = m.hashCode();
-
 		MensagemRequisicao request = new MensagemRequisicao(ref, id, args);
 
-		DatagramPacket packet = new DatagramPacket(request.toBytes(), 0, request.toBytes().length, ip, serverPort);
+		// Cliente UDP
 
-		DatagramSocket socket = new DatagramSocket();
+		// Cria socket cliente
+		DatagramSocket clienteSocket = new DatagramSocket();
 
-		socket.send(packet);
-
+		// Cria datagramas com: dados a enviar, tamanho, endereÃ§o IP e porta
+		DatagramPacket sendPacket = new DatagramPacket(request.toBytes(), 0, request.toBytes().length, ip, serverPort);
+		clienteSocket.send(sendPacket);
 		byte[] buffer = new byte[BufferSize];
 
-		DatagramPacket response = new DatagramPacket(buffer, buffer.length);
+		// Envia datagrama para o servidor
+		DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
 
-		socket.receive(response);
+		// datagrama do servidor
+		clienteSocket.receive(receivePacket);
 		System.out.println("\nO que foi recebido:\n");
-	
-		byte[] result = response.getData();
-
+		byte[] result = receivePacket.getData();
 		System.out.println(MensagemRequisicao.deBytes(result).toString());
-
-		socket.close();
+		clienteSocket.close();
 
 	}
 }

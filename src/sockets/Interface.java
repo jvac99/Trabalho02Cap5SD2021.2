@@ -1,6 +1,7 @@
 package sockets;
 
-public interface Interface{
-	public void metodo1(String str);
-	public void metodo2(String str);
+public interface Interface {
+	public void metodo01(String str);
+
+	public void metodo02(String str);
 }

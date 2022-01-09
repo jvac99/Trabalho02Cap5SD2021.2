@@ -5,7 +5,8 @@ import java.net.InetAddress;
 
 //todas as classes presentes na transferência estão serializadas
 public class RemoteObjectReference implements Serializable {
-	private static final long serialVersionUID = -2946608575979275376L;
+
+	private static final long serialVersionUID = 1L;
 	private InetAddress ipEndereço;
 	private int porta, objectId;
 	private long time;
