@@ -84,7 +84,7 @@ public class Servente extends UnicastRemoteObject implements InterfaceRemota {
 
 	public String metodoRemoto03() throws RemoteException {
 		String str = "Não deu certo.";
-		String nomeDoArquivo = "minhaApostila";
+		String nomeDoArquivo = "meuCD";
 
 		CD cd1 = new CD("codigo00", "titulo00", "genero00", "autor00", 10);
 		Arquivo arquivo = new Arquivo();
@@ -97,7 +97,7 @@ public class Servente extends UnicastRemoteObject implements InterfaceRemota {
 
 	public String metodoRemoto04() throws RemoteException {
 		String str = "Não deu certo.";
-		String nomeDoArquivo = "minhaApostila";
+		String nomeDoArquivo = "meuLivro";
 
 		Livro livro = new Livro("101150700", "Harry Potter e o Cálice de Fogo",
 				"Fantasia, ficção, aventura, bildungsroman", "J. K. Rowling", "2001", 584);
