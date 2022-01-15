@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Produto implements Serializable {
 	private static final long serialVersionUID = -7489684148948280041L;
-	private String codigo, titulo, genero, autor;
+	private String codigo, titulo, genero;
 
 	public Produto() {
 
@@ -14,12 +14,11 @@ public abstract class Produto implements Serializable {
 		return codigo;
 	}
 
-	public Produto(String codigo, String titulo, String genero, String autor) {
+	public Produto(String codigo, String titulo, String genero) {
 		super();
 		this.codigo = codigo;
 		this.titulo = titulo;
 		this.genero = genero;
-		this.autor = autor;
 	}
 
 	public String getTitulo() {
@@ -28,10 +27,6 @@ public abstract class Produto implements Serializable {
 
 	public String getGenero() {
 		return genero;
-	}
-
-	public String getAutor() {
-		return autor;
 	}
 
 	public void setCodigo(String codigo) {
@@ -46,13 +41,9 @@ public abstract class Produto implements Serializable {
 		this.genero = genero;
 	}
 
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
 	@Override
 	public String toString() {
-		return "Produto [codigo=" + codigo + ", titulo=" + titulo + ", genero=" + genero + ", autor=" + autor + "]";
+		return "Produto [codigo=" + codigo + ", titulo=" + titulo + ", genero=" + genero + "]";
 	}
 
 }
